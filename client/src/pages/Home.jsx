@@ -48,6 +48,7 @@ const Home = () => {
             </motion.button>
           </Link>
           
+          
           <Link to="/shop">
             <motion.button
               whileHover={{ scale: 1.05 }}
