@@ -5,7 +5,7 @@ export const products = [
     category: "supplements",
     price: 2499,
     originalPrice: 2999,
-    image: "/src/assets/shop/protein-whey-isolate.jpg",
+    image: "/src/assets/shop/protein-whey-isolate.jpg",   // Update with your real filename
     description: "Premium 100% Whey Protein Isolate - 27g Protein per scoop",
     inStock: true,
   },
@@ -60,7 +60,6 @@ export const products = [
     inStock: true,
   },
 ];
-
 export const categories = [
   { id: 'all', name: 'All Products' },
   { id: 'gymwear', name: 'Gym Wear' },
