@@ -48,7 +48,6 @@ const Home = () => {
             </motion.button>
           </Link>
           
-          
           <Link to="/shop">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -63,4 +62,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home;"// Force redeploy - $(date)" 
