@@ -38,27 +38,25 @@ const Home = () => {
         <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10">
           Premium gym experience in Arjit, Punjab combined with world-class nutrition & gym wear.
         </p>
-
-// Then replace the buttons with:
-<div className="flex flex-col sm:flex-row gap-4 justify-center">
-  <Link to="/gym">
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      className="px-10 py-4 bg-primary-red hover:bg-red-700 text-white font-semibold rounded-full text-lg transition-all"
-    >
-      Join True Fitness
-    </motion.button>
-  </Link>
-  
-  <Link to="/shop">
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      className="px-10 py-4 border-2 border-accent-gold text-accent-gold hover:bg-accent-gold hover:text-black font-semibold rounded-full text-lg transition-all"
-    >
-      Shop Trueform Nutrition
-    </motion.button>
-  </Link>
-</div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link to="/gym">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="px-10 py-4 bg-primary-red hover:bg-red-700 text-white font-semibold rounded-full text-lg transition-all"
+            >
+              Join True Fitness
+            </motion.button>
+          </Link>
+          
+          <Link to="/shop">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="px-10 py-4 border-2 border-accent-gold text-accent-gold hover:bg-accent-gold hover:text-black font-semibold rounded-full text-lg transition-all"
+            >
+              Shop Trueform Nutrition
+            </motion.button>
+          </Link>
+        </div>
       </div>
     </div>
   );
