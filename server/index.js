@@ -12,7 +12,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://true-fitness-snowy.vercel.app',
-    'https://brilliant-narwhal-429200.netlify.app',
+    'https://true-fitness-gym.netlify.app',
     'https://true-fitness.vercel.app'
   ],
   credentials: true,
