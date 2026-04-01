@@ -2,8 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 dotenv.config();
+connectDB();
 
 const app = express();
 
@@ -12,6 +14,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://true-fitness-snowy.vercel.app',
+    'https://brilliant-narwhal-429200.netlify.app',
     'https://true-fitness.vercel.app'
   ],
   credentials: true,
