@@ -1,138 +1,246 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, ArrowLeft, Plus, Minus } from 'lucide-react';
+import { products, categories } from '../data/products';
+import { ShoppingCart, Plus, Trash2, X, MapPin } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
 
-const Wishlist = () => {
-  const navigate = useNavigate();
-  const { wishlist, removeFromWishlist, updateQuantity, clearWishlist } = useWishlist();
+const Shop = () => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showCart, setShowCart] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [orderId, setOrderId] = useState('');
 
-  const totalValue = wishlist.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const { wishlist, addToWishlist, removeFromWishlist, wishlistCount } = useWishlist();
+
+  const filteredProducts = selectedCategory === 'all' 
+    ? products 
+    : products.filter(p => p.category === selectedCategory);
+
+  const totalPrice = wishlist.reduce((sum, item) => sum + item.price, 0);
+
+  const handleVisitShop = () => {
+    if (wishlist.length === 0) return;
+    const newOrderId = "TFN" + Date.now().toString().slice(-8);
+    setOrderId(newOrderId);
+    setShowSuccess(true);
+    setShowCart(false);
+  };
+
+  const closeSuccess = () => {
+    setShowSuccess(false);
+  };
 
   return (
     <div className="bg-dark-bg min-h-screen pb-20">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => navigate('/shop')}
-              className="text-gray-400 hover:text-white flex items-center gap-2"
-            >
-              <ArrowLeft size={24} />
-              Back to Shop
-            </button>
-            <motion.h1 
+      {/* Hero */}
+      <div className="bg-black py-20 text-center border-b border-primary-red/30">
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-6xl font-bold mb-4"
+        >
+          TRUEFORM NUTRITION
+        </motion.h1>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="text-2xl text-gray-400 mb-2"
+        >
+          Premium Gym Wear & Supplements
+        </motion.p>
+        <p className="text-accent-gold">Curated by Gourav Sharma</p>
+        <p className="text-sm text-gray-500 mt-6">📍 Shop is located right next to the gym</p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* Categories */}
+        <div className="flex flex-wrap gap-3 justify-center mb-12">
+          {categories.map((cat, index) => (
+            <motion.button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl font-bold"
+              transition={{ delay: index * 0.05 }}
+              className={`px-8 py-3 rounded-full font-medium transition-all ${
+                selectedCategory === cat.id 
+                  ? 'bg-primary-red text-white' 
+                  : 'bg-dark-card hover:bg-gray-800 border border-gray-700'
+              }`}
             >
-              My Wishlist
-            </motion.h1>
-          </div>
-          
-          {wishlist.length > 0 && (
-            <motion.button 
-              onClick={clearWishlist}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-red-500 hover:text-red-600 text-sm font-medium flex items-center gap-2"
-            >
-              <Trash2 size={18} />
-              Clear All
+              {cat.name}
             </motion.button>
-          )}
+          ))}
         </div>
 
-        {wishlist.length === 0 ? (
-          <div className="text-center py-32">
-            <div className="text-7xl mb-6">🛍️</div>
-            <h2 className="text-3xl font-bold text-gray-300 mb-4">Your wishlist is empty</h2>
-            <p className="text-gray-400 mb-8">Browse products and add items you like</p>
-            <button 
-              onClick={() => navigate('/shop')}
-              className="bg-primary-red hover:bg-red-700 px-10 py-4 rounded-full font-semibold"
-            >
-              Browse Products
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <AnimatePresence>
-                {wishlist.map((item, index) => (
-                  <motion.div
-                    key={item.productId || item.id}
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 30, scale: 0.95 }}
-                    transition={{ duration: 0.5, delay: index * 0.04 }}
-                    className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800 group"
-                  >
-                    <div className="h-64 bg-black relative overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-bold text-xl mb-3 line-clamp-2">{item.name}</h3>
-                      <p className="text-primary-red text-2xl font-bold mb-6">₹{item.price}</p>
+        {/* Products Grid with Staggered Animation */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <AnimatePresence>
+            {filteredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.5, delay: index * 0.03 }}
+                whileHover={{ y: -12 }}
+                className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800 group"
+              >
+                <div className="relative h-80 bg-black overflow-hidden">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-bold text-xl mb-2 line-clamp-2">{product.name}</h3>
+                  <p className="text-gray-400 text-sm mb-6 line-clamp-3">{product.description}</p>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-3xl font-bold">₹{product.price}</span>
+                    <motion.button 
+                      onClick={() => addToWishlist(product)} 
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="bg-primary-red hover:bg-red-700 p-4 rounded-2xl transition-all"
+                    >
+                      <Plus size={24} />
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-3">
-                          <button 
-                            onClick={() => updateQuantity(item.productId || item.id, item.quantity - 1)}
-                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
-                          >
-                            <Minus size={16} />
-                          </button>
-                          <span className="font-semibold text-lg w-8 text-center">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.productId || item.id, item.quantity + 1)}
-                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
-                          >
-                            <Plus size={16} />
-                          </button>
-                        </div>
+      {/* Floating Wishlist Button */}
+      <motion.button 
+        onClick={() => setShowCart(true)}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-8 right-8 bg-primary-red hover:bg-red-700 p-5 rounded-full shadow-2xl flex items-center gap-3 z-50"
+      >
+        <ShoppingCart size={28} />
+        <div className="font-bold text-lg bg-white text-black rounded-full w-7 h-7 flex items-center justify-center">
+          {wishlistCount}
+        </div>
+      </motion.button>
 
-                        <button 
-                          onClick={() => removeFromWishlist(item.productId || item.id)}
-                          className="text-red-500 hover:text-red-600 flex items-center gap-2"
-                        >
-                          <Trash2 size={20} />
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+      {/* Wishlist Sidebar */}
+      {showCart && (
+        <div className="fixed inset-0 bg-black/90 z-[60] flex justify-end">
+          <div className="bg-dark-card w-full max-w-md h-full flex flex-col">
+            <div className="p-8 flex-shrink-0">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-bold">Your Wishlist ({wishlistCount})</h2>
+                <button onClick={() => setShowCart(false)}>
+                  <X size={28} />
+                </button>
+              </div>
             </div>
 
-            <div className="mt-16 bg-dark-card rounded-3xl p-10 text-center">
-              <p className="text-2xl font-medium mb-6">
-                Total Value: <span className="text-accent-gold">₹{totalValue}</span>
-              </p>
-              <p className="text-gray-400 mb-8">
-                Please visit our Trueform Nutrition Shop (located right next to the gym) to purchase these items.
-              </p>
-              
+            <div className="flex-1 overflow-y-auto px-8 space-y-6 pb-8">
+              {wishlist.length === 0 ? (
+                <p className="text-center py-20 text-gray-400">Your wishlist is empty</p>
+              ) : (
+                wishlist.map((item) => (
+                  <div key={item.cartId || item.id} className="flex gap-4 bg-black/50 p-4 rounded-2xl">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      loading="lazy" 
+                      decoding="async" 
+                      className="w-20 h-20 object-cover rounded-xl" 
+                    />
+                    <div className="flex-1">
+                      <p className="font-medium">{item.name}</p>
+                      <p className="text-primary-red font-bold">₹{item.price}</p>
+                    </div>
+                    <button 
+                      onClick={() => removeFromWishlist(item.productId || item.cartId)} 
+                      className="text-red-500 self-start"
+                    >
+                      <Trash2 size={22} />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {wishlist.length > 0 && (
+              <div className="p-8 border-t border-gray-700 flex-shrink-0">
+                <div className="flex justify-between text-2xl font-bold mb-8">
+                  <span>Total Value</span>
+                  <span>₹{totalPrice}</span>
+                </div>
+                <button 
+                  onClick={handleVisitShop}
+                  className="w-full py-5 bg-accent-gold hover:bg-amber-600 text-black font-semibold rounded-2xl text-lg transition-all"
+                >
+                  Visit Shop to Purchase
+                </button>
+                <p className="text-center text-xs text-gray-400 mt-4">📍 Trueform Nutrition Shop (Right next to True Fitness Gym)</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 bg-black/90 z-[70] flex items-center justify-center p-6 overflow-y-auto">
+          <div className="bg-[#111827] w-full max-w-lg rounded-3xl border-4 border-[#d97706] overflow-hidden flex flex-col max-h-[92vh]">
+            <div className="p-8 border-b border-[#d97706]/30 text-center flex-shrink-0">
+              <div className="text-6xl mb-4">🛍️</div>
+              <h2 className="text-4xl font-bold text-white">Great Choices!</h2>
+              <p className="text-[#fbbf24] text-xl mt-2">Your selected items are ready at Trueform Nutrition Shop</p>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="bg-[#1f2937] rounded-2xl p-6 mb-8">
+                <p className="text-gray-400 mb-1">Reference ID</p>
+                <p className="text-white font-mono text-lg mb-6">{orderId}</p>
+                <p className="text-gray-400 mb-1">Total Value</p>
+                <p className="text-white text-3xl font-bold">₹{totalPrice}</p>
+              </div>
+
+              <div className="mb-10">
+                <h4 className="text-gray-300 mb-5 text-lg">Items to Purchase:</h4>
+                <div className="space-y-4">
+                  {wishlist.map((item, index) => (
+                    <div key={index} className="flex justify-between items-center py-3 border-b border-gray-700 last:border-none">
+                      <span className="text-gray-200 pr-4">{item.name}</span>
+                      <span className="text-[#fbbf24] font-semibold whitespace-nowrap">₹{item.price}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-3 text-accent-gold py-4">
+                <MapPin size={28} />
+                <span className="font-medium text-center">Trueform Nutrition Shop (Right next to True Fitness Gym)</span>
+              </div>
+            </div>
+
+            <div className="p-8 border-t border-[#d97706]/30 flex-shrink-0">
               <button 
-                onClick={() => navigate('/shop')}
-                className="bg-accent-gold hover:bg-amber-500 text-black px-12 py-5 rounded-full font-semibold text-lg"
+                onClick={closeSuccess}
+                className="w-full py-5 bg-[#d97706] hover:bg-amber-500 text-black font-bold text-xl rounded-2xl transition-all"
               >
-                Continue Browsing
+                Got it! I'll visit the shop
               </button>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Wishlist;
+export default Shop;

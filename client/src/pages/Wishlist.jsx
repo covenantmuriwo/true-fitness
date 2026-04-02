@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Trash2, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trash2, ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
 
 const Wishlist = () => {
   const navigate = useNavigate();
-  const { wishlist, removeFromWishlist } = useWishlist();
+  const { wishlist, removeFromWishlist, updateQuantity, clearWishlist } = useWishlist();
 
-  const totalValue = wishlist.reduce((sum, item) => sum + item.price, 0);
+  const totalValue = wishlist.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
     <div className="bg-dark-bg min-h-screen pb-20">
@@ -22,18 +21,25 @@ const Wishlist = () => {
               <ArrowLeft size={24} />
               Back to Shop
             </button>
-            <h1 className="text-5xl font-bold">My Wishlist</h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl font-bold"
+            >
+              My Wishlist
+            </motion.h1>
           </div>
           
           {wishlist.length > 0 && (
-            <button 
-              onClick={() => {
-                wishlist.forEach(item => removeFromWishlist(item.cartId || item.productId));
-              }}
-              className="text-red-500 hover:text-red-600 text-sm font-medium"
+            <motion.button 
+              onClick={clearWishlist}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-red-500 hover:text-red-600 text-sm font-medium flex items-center gap-2"
             >
+              <Trash2 size={18} />
               Clear All
-            </button>
+            </motion.button>
           )}
         </div>
 
@@ -52,36 +58,59 @@ const Wishlist = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {wishlist.map((item) => (
-                <motion.div
-                  key={item.cartId || item.productId}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800"
-                >
-                  <div className="h-64 bg-black relative">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover" 
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-bold text-xl mb-3 line-clamp-2">{item.name}</h3>
-                    <p className="text-primary-red text-2xl font-bold mb-6">₹{item.price}</p>
-                    
-                    <button 
-                      onClick={() => removeFromWishlist(item.cartId || item.productId)}
-                      className="w-full py-3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl flex items-center justify-center gap-2 transition-all"
-                    >
-                      <Trash2 size={18} />
-                      Remove
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
+              <AnimatePresence>
+                {wishlist.map((item, index) => (
+                  <motion.div
+                    key={item.productId || item.id}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30, scale: 0.95 }}
+                    transition={{ duration: 0.5, delay: index * 0.04 }}
+                    className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800 group"
+                  >
+                    <div className="h-64 bg-black relative overflow-hidden">
+                      <img 
+                        src={item.image} 
+                        alt={item.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl mb-3 line-clamp-2">{item.name}</h3>
+                      <p className="text-primary-red text-2xl font-bold mb-6">₹{item.price}</p>
+
+                      {/* Quantity Controls */}
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                          <button 
+                            onClick={() => updateQuantity(item.productId || item.id, item.quantity - 1)}
+                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="font-semibold text-lg w-8 text-center">{item.quantity}</span>
+                          <button 
+                            onClick={() => updateQuantity(item.productId || item.id, item.quantity + 1)}
+                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+
+                        <button 
+                          onClick={() => removeFromWishlist(item.productId || item.id)}
+                          className="text-red-500 hover:text-red-600 flex items-center gap-2"
+                        >
+                          <Trash2 size={20} />
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
 
             <div className="mt-16 bg-dark-card rounded-3xl p-10 text-center">
