@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-
+import { ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -21,11 +22,27 @@ const Contact = () => {
           <div className="h-screen flex flex-col items-center justify-center text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-5">Get In Touch</h1>
           <p className="text-lg md:text-2xl text-gray-300 mb-2">We're here to help you on your fitness journey</p>
+          
+          <motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{
+    duration: 1.8,
+    repeat: Infinity,
+  }}
+  className="mt-14 flex flex-col items-center gap-2 opacity-60"
+>
+  <span className="text-xs uppercase tracking-[0.3em] text-gray-500">
+    Explore
+  </span>
+
+  <ChevronDown size={28} className="text-gray-500" />
+</motion.div>
+
           </div>
+
         </div>
-
-
         <div className="grid md:grid-cols-2 gap-16">
+          
           {/* Contact Form */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">Send us a Message</h2>

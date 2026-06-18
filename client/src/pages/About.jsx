@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, Users, Target } from 'lucide-react';
-;
+import { ChevronDown } from 'lucide-react';
 
 const About = () => {
   return (
@@ -25,7 +25,20 @@ const About = () => {
   >
     Empowering fitness journeys in Arjit, Punjab since day one.
   </motion.p>
+<motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{
+    duration: 1.8,
+    repeat: Infinity,
+  }}
+  className="mt-14 flex flex-col items-center gap-2 opacity-60"
+>
+  <span className="text-xs uppercase tracking-[0.3em] text-gray-500">
+    Explore
+  </span>
 
+  <ChevronDown size={28} className="text-gray-500" />
+</motion.div>
 </div>
 
      <div className="max-w-6xl mx-auto px-6 py-16">

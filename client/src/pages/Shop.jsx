@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { products, categories } from '../data/products';
 import { ShoppingCart, Plus, Trash2, X, MapPin } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
-
+import { ChevronDown } from 'lucide-react';
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showCart, setShowCart] = useState(false);
@@ -60,6 +60,20 @@ const Shop = () => {
   <p className="text-gray-400 text-sm mt-1">
     📍 Shop is located right next to the gym
   </p>
+  <motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{
+    duration: 1.8,
+    repeat: Infinity,
+  }}
+  className="mt-14 flex flex-col items-center gap-2 opacity-60"
+>
+  <span className="text-xs uppercase tracking-[0.3em] text-gray-500">
+    Explore
+  </span>
+
+  <ChevronDown size={28} className="text-gray-500" />
+</motion.div>
 
 </div>
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Award, User } from 'lucide-react';
 import manojImage from '../assets/gym/manoj-trainer.jpg';
+import { ChevronDown } from 'lucide-react';
 
 const Gym = () => {
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
@@ -103,6 +104,20 @@ return (
 >
   Join True Fitness
 </motion.button>
+<motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{
+    duration: 1.8,
+    repeat: Infinity,
+  }}
+  className="mt-14 flex flex-col items-center gap-2 opacity-60"
+>
+  <span className="text-xs uppercase tracking-[0.3em] text-gray-500">
+    Explore
+  </span>
+
+  <ChevronDown size={28} className="text-gray-500" />
+</motion.div>
 
     </div>
   </section>
