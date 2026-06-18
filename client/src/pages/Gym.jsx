@@ -38,7 +38,7 @@ const Gym = () => {
       price: "₹4500",
       duration: "/4 months",
       features: ["Unlimited Access", "6 PT Sessions with Manoj", "Nutrition Guidance"],
-      color: "border-accent-gold scale-105 shadow-2xl",
+      color: "border-accent-gold",
       popular: true
     },
     {
@@ -72,171 +72,235 @@ const Gym = () => {
     }, 600);
   };
 
-  return (
-    <div className="bg-dark-bg">
-      {/* Gym Hero */}
-      <div className="relative h-[65vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10" />
-        <div className="absolute inset-0 bg-[url('https://via.placeholder.com/1920x1080/111827/ef4444')] bg-cover bg-center" />
-        
-        <div className="relative z-20 text-center px-6 max-w-4xl">
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">TRUE FITNESS</h1>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-10">
-            Train with Purpose. Powered by Manoj.
-          </p>
-          <motion.a
-            href="#memberships"
-            whileHover={{ scale: 1.05 }}
-            className="inline-block px-12 py-5 bg-primary-red text-xl font-semibold rounded-full hover:bg-red-700 transition-all"
-          >
-            Join True Fitness
-          </motion.a>
-        </div>
-      </div>
+return (
+  <>
+  {showBookingSuccess && (
+  <div className="fixed top-5 right-5 bg-green-600 text-white px-5 py-3 rounded-xl shadow-lg z-50">
+    Session booked successfully!
+  </div>
+)}
+  <section className="min-h-screen flex items-center justify-center px-6">
+    <div className="text-center max-w-3xl">
 
-      {/* Class Schedule */}
-      <div className="max-w-6xl mx-auto px-6 py-20" id="schedule">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4">Class Schedule</h2>
-          <p className="text-xl text-gray-400">All sessions conducted by Coach Manoj</p>
-        </div>
+      <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-5">
+        TRUE FITNESS
+      </h1>
 
-        <div className="grid gap-5">
-          {classes.map((cls, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="bg-dark-card border border-primary-red/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-6"
-            >
-              <div className="flex items-center gap-6">
-                <Clock className="text-primary-red" size={36} />
-                <div>
-                  <p className="text-3xl font-bold text-white">{cls.time}</p>
-                  <p className="text-2xl font-medium">{cls.name}</p>
-                </div>
-              </div>
+      <p className="text-lg md:text-2xl text-gray-300 mb-8">
+        Train with Purpose. Powered by Manoj.
+      </p>
 
-              <div className="flex items-center gap-3 text-accent-gold">
-                <User size={22} />
-                <span className="font-medium">Coach Manoj</span>
-              </div>
+<motion.button
+  onClick={() => {
+    const section = document.getElementById("memberships");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.98 }}
+  className="inline-block px-8 py-3 bg-primary-red hover:bg-red-700 rounded-full font-semibold transition-all"
+>
+  Join True Fitness
+</motion.button>
 
-              <button 
-                onClick={() => handleBookSession(cls.name)}
-                className="px-10 py-3.5 bg-primary-red hover:bg-red-700 rounded-full font-semibold transition-all"
-              >
-                Book Session
-              </button>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+    </div>
+  </section>
+  {/* Class Schedule */}
+<section className="max-w-6xl mx-auto px-6 py-16">
 
-      {/* Trainer Section - Coach Manoj */}
-      <div className="bg-black py-20">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-5xl font-bold mb-6">Meet Your Coach</h2>
-          <p className="text-xl text-gray-400 mb-16 max-w-2xl mx-auto">
-            All training sessions at True Fitness are personally led by Coach Manoj
-          </p>
+  <div className="text-center mb-12">
+    <h2 className="text-3xl md:text-4xl font-bold mb-3">
+      Class Schedule
+    </h2>
 
-          <motion.div
-            whileHover={{ y: -8 }}
-            className="bg-dark-card rounded-3xl overflow-hidden max-w-2xl mx-auto border border-primary-red/40"
-          >
-            <div className="bg-black p-4">
-              <img 
-                src={manojImage} 
-                alt="Coach Manoj" 
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto max-h-[460px] object-contain mx-auto" 
-              />
-            </div>
-            
-            <div className="p-10">
-              <h3 className="text-4xl font-bold mb-2">Manoj</h3>
-              <p className="text-primary-red text-2xl mb-6">Head Personal Trainer & Coach</p>
-              <p className="text-gray-300 leading-relaxed text-lg">
-                Certified strength & conditioning coach. Specializes in powerlifting, HIIT, and functional training.
-              </p>
-              <div className="mt-8 inline-flex items-center gap-3 bg-black/50 px-6 py-3 rounded-full">
-                <Award className="text-accent-gold" />
-                <span className="font-medium">12+ years of Experience</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+    <p className="text-gray-400">
+      All sessions conducted by Coach Manoj
+    </p>
+  </div>
 
-      {/* Membership Plans */}
-      <div className="max-w-7xl mx-auto px-6 py-20" id="memberships">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">Membership Plans</h2>
-          <p className="text-gray-400 text-lg">Choose the plan that best fits your fitness journey with Coach Manoj</p>
-        </div>
+  <div className="space-y-5">
+    {classes.map((cls, index) => (
+      <motion.div
+        key={index}
+        whileHover={{ y: -3 }}
+        className="bg-dark-card border border-white/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6"
+      >
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {memberships.map((plan, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.02 }}
-              className={`bg-dark-card rounded-3xl p-8 border-2 ${plan.color} relative flex flex-col h-full ${plan.popular ? 'ring-2 ring-accent-gold shadow-2xl' : ''}`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-gold text-black px-6 py-1.5 rounded-full text-sm font-bold tracking-wider">
-                  MOST POPULAR
-                </div>
-              )}
+        {/* Time + Name */}
+        <div className="flex items-center gap-5">
+          <Clock className="text-primary-red" size={30} />
 
-              <div className="mb-8">
-                <h3 className="text-3xl font-bold mb-1">{plan.title}</h3>
-                <div className="flex items-baseline">
-                  <span className="text-5xl font-bold tracking-tighter">{plan.price}</span>
-                  <span className="text-base text-gray-400 ml-2">{plan.duration}</span>
-                </div>
-              </div>
+          <div>
+            <p className="text-xl font-semibold text-white">
+              {cls.time}
+            </p>
 
-              <ul className="space-y-4 mb-auto text-[15px] leading-tight">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <Award className="text-primary-red mt-1 flex-shrink-0" size={20} />
-                    <span className="text-gray-200">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button 
-                onClick={() => handleChoosePlan(plan)}
-                className="mt-10 w-full py-4 bg-primary-red hover:bg-red-700 font-semibold rounded-2xl transition-all text-base"
-              >
-                Choose {plan.title} Plan
-              </button>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Booking Success Modal */}
-      {showBookingSuccess && (
-        <div className="fixed inset-0 bg-black/90 z-[80] flex items-center justify-center p-6">
-          <div className="bg-dark-card rounded-3xl p-12 text-center max-w-md border border-primary-red">
-            <div className="text-6xl mb-6">✅</div>
-            <h3 className="text-3xl font-bold mb-4">Session Booked!</h3>
-            <p className="text-gray-300 mb-2">Your session with Coach Manoj has been noted.</p>
-            <p className="text-gray-400">Please arrive 10 minutes early.</p>
-            <button 
-              onClick={() => setShowBookingSuccess(false)}
-              className="mt-8 px-10 py-4 bg-primary-red rounded-full font-semibold"
-            >
-              Done
-            </button>
+            <p className="text-gray-300">
+              {cls.name}
+            </p>
           </div>
         </div>
-      )}
+
+        {/* Coach */}
+        <div className="flex items-center gap-2 text-accent-gold">
+          <User size={20} />
+          <span>Coach Manoj</span>
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={() => handleBookSession(cls.name)}
+          className="px-7 py-3 bg-primary-red hover:bg-red-700 rounded-xl font-medium transition-all"
+        >
+          Book Session
+        </button>
+
+      </motion.div>
+    ))}
+  </div>
+
+</section>
+{/* Trainer Section - Coach Manoj */}
+<div className="py-16 md:py-20">
+  <div className="max-w-6xl mx-auto px-6">
+
+    {/* Heading */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl md:text-4xl font-bold mb-3">
+        Meet Your Coach
+      </h2>
+
+      <p className="text-base text-gray-400 max-w-2xl mx-auto">
+        All training sessions at True Fitness are personally led by Coach Manoj
+      </p>
     </div>
-  );
+
+    {/* Card */}
+    <motion.div
+      whileHover={{ y: -5 }}
+      className="bg-dark-card border border-primary-red/30 rounded-3xl overflow-hidden"
+    >
+
+      <div className="grid md:grid-cols-2 items-center">
+
+        {/* Left Side - Image */}
+        <div className="bg-black flex justify-center items-center p-8">
+          <img
+            src={manojImage}
+            alt="Coach Manoj"
+            loading="lazy"
+            decoding="async"
+            className="w-full max-h-[500px] object-contain"
+          />
+        </div>
+
+        {/* Right Side - Text */}
+        <div className="p-8 md:p-12">
+
+          <h3 className="text-3xl font-bold mb-2">
+            Manoj
+          </h3>
+
+          <p className="text-primary-red text-lg mb-6">
+            Head Personal Trainer & Coach
+          </p>
+
+          <p className="text-gray-300 leading-relaxed mb-8">
+            Certified strength & conditioning coach specializing in
+            powerlifting, HIIT and functional training.
+          </p>
+
+          <div className="space-y-3 text-gray-300 mb-8">
+            <p>• Powerlifting</p>
+            <p>• HIIT Training</p>
+            <p>• Functional Fitness</p>
+          </div>
+
+          <div className="inline-flex items-center gap-3 bg-black/40 px-6 py-3 rounded-full">
+            <Award className="text-accent-gold" />
+            <span>12+ Years of Experience</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </motion.div>
+
+  </div>
+</div>
+{/* Membership Plans */}
+<div id="memberships" className="max-w-6xl mx-auto px-6 py-16">
+
+  {/* Heading */}
+  <div className="text-center mb-12">
+    <h2 className="text-3xl md:text-4xl font-bold mb-3">
+      Membership Plans
+    </h2>
+
+    <p className="text-base text-gray-400">
+      Choose the plan that fits your fitness journey.
+    </p>
+  </div>
+
+  {/* Plans */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {memberships.map((plan, i) => (
+      <motion.div
+        key={i}
+        whileHover={{ y: -5 }}
+        className={`bg-dark-card rounded-3xl p-7 border relative flex flex-col
+        ${plan.popular
+          ? 'border-accent-gold shadow-xl'
+          : 'border-white/10'
+        }`}
+      >
+
+        {plan.popular && (
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-gold text-black px-5 py-1 rounded-full text-sm font-semibold">
+            MOST POPULAR
+          </div>
+        )}
+
+        <h3 className="text-2xl font-semibold mb-2">
+          {plan.title}
+        </h3>
+
+        <div className="mb-8">
+          <span className="text-4xl font-bold">
+            {plan.price}
+          </span>
+
+          <span className="text-gray-400 ml-2">
+            {plan.duration}
+          </span>
+        </div>
+
+        <ul className="space-y-3 mb-8 text-gray-300">
+          {plan.features.map((feature, idx) => (
+            <li key={idx} className="flex items-center gap-3">
+              <Award size={18} className="text-primary-red" />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          onClick={() => handleChoosePlan(plan)}
+          className="mt-auto py-3 rounded-2xl bg-primary-red hover:bg-red-700 transition-all"
+        >
+          Choose Plan
+        </button>
+
+      </motion.div>
+    ))}
+  </div>
+</div>
+  </>
+  
+);
+
 };
 
 export default Gym;

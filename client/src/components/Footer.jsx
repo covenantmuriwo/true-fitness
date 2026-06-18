@@ -2,38 +2,35 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-black py-12 border-t border-primary-red/20">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          
-          {/* Developer Logo - Bigger & More Visible */}
-          <div className="flex items-center gap-4">
-            <img 
-              src="/assets/kovar-logo.png" 
-              alt="Kovar" 
-              className="h-14 w-auto opacity-90 hover:opacity-100 transition-all duration-300 drop-shadow-md" 
-            />
-            <div>
-              <p className="font-semibold text-white text-xl">Kovar</p>
-              <p className="text-sm text-gray-400 -mt-1">Full Stack Developer</p>
-            </div>
-          </div>
+    <footer className="border-t border-white/10 bg-black/80 mt-20">
 
-          {/* Copyright */}
-          <div className="text-center md:text-left">
-            <p className="text-sm text-gray-400">
-              © 2026 True Fitness & Trueform Nutrition, Arjit, Punjab.
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
 
-          {/* Quick Links */}
-          <div className="flex gap-6 text-sm">
-            <Link to="/about" className="hover:text-primary-red transition-colors">About</Link>
-            <Link to="/contact" className="hover:text-primary-red transition-colors">Contact</Link>
-            <Link to="/shop" className="hover:text-primary-red transition-colors">Shop</Link>
+        {/* Developer Credit (subtle) */}
+        <div className="flex items-center gap-3 opacity-80">
+          <img 
+            src="/assets/kovar-logo.png" 
+            alt="Kovar" 
+            className="h-10 w-auto"
+          />
+          <div className="leading-tight">
+            <p className="text-white text-sm font-medium">Kovar</p>
+            <p className="text-xs text-gray-400">Full Stack Developer</p>
           </div>
-
         </div>
+
+        {/* Copyright */}
+        <div className="text-center text-xs md:text-sm text-gray-400">
+          © 2026 True Fitness & Trueform Nutrition, Arjit, Punjab.
+        </div>
+
+        {/* Links */}
+        <div className="flex gap-5 text-sm text-gray-300">
+          <Link to="/about" className="hover:text-primary-red transition-colors">About</Link>
+          <Link to="/contact" className="hover:text-primary-red transition-colors">Contact</Link>
+          <Link to="/shop" className="hover:text-primary-red transition-colors">Shop</Link>
+        </div>
+
       </div>
     </footer>
   );

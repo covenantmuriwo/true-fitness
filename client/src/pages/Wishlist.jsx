@@ -9,25 +9,30 @@ const Wishlist = () => {
 
   const totalValue = wishlist.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  return (
+ return (
+  <div className="min-h-screen px-6 pt-24">
     <div className="bg-dark-bg min-h-screen pb-20">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => navigate('/shop')}
-              className="text-gray-400 hover:text-white flex items-center gap-2"
+              className="text-gray-400 hover:text-white flex items-center gap-2 mb-6"
             >
               <ArrowLeft size={24} />
               Back to Shop
             </button>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-5xl font-bold"
-            >
-              My Wishlist
-            </motion.h1>
+<div className="flex flex-col items-center justify-center text-center mb-10">
+
+  <motion.h1
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="text-4xl md:text-6xl font-bold tracking-tight mb-5 text-center"
+  >
+    My Wishlist
+  </motion.h1>
+
+</div>
           </div>
           
           {wishlist.length > 0 && (
@@ -44,10 +49,10 @@ const Wishlist = () => {
         </div>
 
         {wishlist.length === 0 ? (
-          <div className="text-center py-32">
+          <div className="min-h-[60vh] flex flex-col items-center justify-center -mt-10 text-center">
             <div className="text-7xl mb-6">🛍️</div>
-            <h2 className="text-3xl font-bold text-gray-300 mb-4">Your wishlist is empty</h2>
-            <p className="text-gray-400 mb-8">Browse products and add items you like</p>
+           <h2 className="text-3xl md:text-4xl font-bold text-gray-300 mb-4">Your wishlist is empty</h2>
+            <p className="text-gray-400 text-base mb-8">Browse products and add items you like</p>
             <button 
               onClick={() => navigate('/shop')}
               className="bg-primary-red hover:bg-red-700 px-10 py-4 rounded-full font-semibold"
@@ -66,7 +71,7 @@ const Wishlist = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 30, scale: 0.95 }}
                     transition={{ duration: 0.5, delay: index * 0.04 }}
-                    className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800 group"
+                    className="bg-dark-card rounded-3xl overflow-hidden border border-primary-red/30 group"
                   >
                     <div className="h-64 bg-black relative overflow-hidden">
                       <img 
@@ -77,23 +82,23 @@ const Wishlist = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                       />
                     </div>
-                    <div className="p-6">
-                      <h3 className="font-bold text-xl mb-3 line-clamp-2">{item.name}</h3>
-                      <p className="text-primary-red text-2xl font-bold mb-6">₹{item.price}</p>
+                    <div className="p-8">
+                      <h3 className="font-semibold text-2xl mb-3 line-clamp-2">{item.name}</h3>
+                      <p className="text-primary-red text-3xl font-bold mb-6">₹{item.price}</p>
 
                       {/* Quantity Controls */}
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-3">
                           <button 
                             onClick={() => updateQuantity(item.productId || item.id, item.quantity - 1)}
-                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
+                            className="w-9 h-9 flex items-center justify-center border border-primary-red/30 rounded-xl hover:bg-primary-red/10 transition-all"
                           >
                             <Minus size={16} />
                           </button>
                           <span className="font-semibold text-lg w-8 text-center">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.productId || item.id, item.quantity + 1)}
-                            className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded-xl hover:bg-gray-800"
+                            className="w-9 h-9 flex items-center justify-center border border-primary-red/30 rounded-xl hover:bg-primary-red/10 transition-all"
                           >
                             <Plus size={16} />
                           </button>
@@ -113,8 +118,8 @@ const Wishlist = () => {
               </AnimatePresence>
             </div>
 
-            <div className="mt-16 bg-dark-card rounded-3xl p-10 text-center">
-              <p className="text-2xl font-medium mb-6">
+            <div className="mt-12 bg-dark-card rounded-3xl p-8 md:p-12 text-center border border-primary-red/30">
+              <p className="text-2xl md:text-3xl font-medium mb-6">
                 Total Value: <span className="text-accent-gold">₹{totalValue}</span>
               </p>
               <p className="text-gray-400 mb-8">
@@ -123,7 +128,7 @@ const Wishlist = () => {
               
               <button 
                 onClick={() => navigate('/shop')}
-                className="bg-accent-gold hover:bg-amber-500 text-black px-12 py-5 rounded-full font-semibold text-lg"
+                className="bg-primary-red hover:bg-red-700 text-white px-10 py-4 rounded-xl font-semibold transition-all"
               >
                 Continue Browsing
               </button>
@@ -132,7 +137,9 @@ const Wishlist = () => {
         )}
       </div>
     </div>
+     </div>
   );
+
 };
 
 export default Wishlist;

@@ -18,14 +18,20 @@ const Contact = () => {
     <div className="bg-dark-bg min-h-screen py-20">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold mb-6">Get In Touch</h1>
-          <p className="text-xl text-gray-400">We're here to help you on your fitness journey</p>
+          <div className="h-screen flex flex-col items-center justify-center text-center px-6">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-5">Get In Touch</h1>
+          <p className="text-lg md:text-2xl text-gray-300 mb-2">We're here to help you on your fitness journey</p>
+          </div>
         </div>
+
 
         <div className="grid md:grid-cols-2 gap-16">
           {/* Contact Form */}
           <div>
-            <h2 className="text-3xl font-bold mb-8">Send us a Message</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">Send us a Message</h2>
+            <p className="text-base text-gray-400 mb-8">
+  We'd love to hear from you.
+</p>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm mb-2">Your Name</label>
@@ -69,7 +75,10 @@ const Contact = () => {
           {/* Contact Info + Map */}
           <div className="space-y-10">
             <div>
-              <h2 className="text-3xl font-bold mb-8">Visit Us</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Visit Us</h2>
+              <p className="text-base text-gray-400 mb-8">
+  Come train with us and meet the team.
+</p>
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <MapPin className="text-primary-red mt-1" size={28} />

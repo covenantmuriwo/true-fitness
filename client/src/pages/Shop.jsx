@@ -33,30 +33,39 @@ const Shop = () => {
   return (
     <div className="bg-dark-bg min-h-screen pb-20">
       {/* Hero */}
-      <div className="bg-black py-20 text-center border-b border-primary-red/30">
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-6xl font-bold mb-4"
-        >
-          TRUEFORM NUTRITION
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-2xl text-gray-400 mb-2"
-        >
-          Premium Gym Wear & Supplements
-        </motion.p>
-        <p className="text-accent-gold">Curated by Gourav Sharma</p>
-        <p className="text-sm text-gray-500 mt-6">📍 Shop is located right next to the gym</p>
-      </div>
+<div className="h-screen flex flex-col items-center justify-center text-center px-6">
+
+  <motion.h1
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7 }}
+    className="text-4xl md:text-6xl font-bold tracking-tight mb-5"
+  >
+    TRUEFORM NUTRITION
+  </motion.h1>
+
+  <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, delay: 0.1 }}
+    className="text-lg md:text-2xl text-gray-300 mb-2"
+  >
+    Premium Gym Wear & Supplements
+  </motion.p>
+
+  <p className="text-gray-400 text-base mt-2">
+    Curated by Gourav Sharma
+  </p>
+
+  <p className="text-gray-400 text-sm mt-1">
+    📍 Shop is located right next to the gym
+  </p>
+
+</div>
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         {/* Categories */}
-        <div className="flex flex-wrap gap-3 justify-center mb-12">
+       <div className="flex flex-wrap gap-3 justify-center mb-12">
           {categories.map((cat, index) => (
             <motion.button
               key={cat.id}
@@ -76,7 +85,7 @@ const Shop = () => {
         </div>
 
         {/* Products Grid with Staggered Animation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
           <AnimatePresence>
             {filteredProducts.map((product, index) => (
               <motion.div
@@ -85,8 +94,8 @@ const Shop = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
                 transition={{ duration: 0.5, delay: index * 0.03 }}
-                whileHover={{ y: -12 }}
-                className="bg-dark-card rounded-3xl overflow-hidden border border-gray-800 group"
+                whileHover={{ y: -5 }}
+                className="bg-dark-card rounded-3xl overflow-hidden border border-primary-red/20 group"
               >
                 <div className="relative h-80 bg-black overflow-hidden">
                   <img 
@@ -97,12 +106,13 @@ const Shop = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2 line-clamp-2">{product.name}</h3>
-                  <p className="text-gray-400 text-sm mb-6 line-clamp-3">{product.description}</p>
+                <div className="p-8">
+                  <h3 className="font-semibold text-xl mb-5 line-clamp-2">
+  {product.name}
+</h3>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-3xl font-bold">₹{product.price}</span>
+                    <span className="text-2xl font-bold text-accent-gold">₹{product.price}</span>
                     <motion.button 
                       onClick={() => addToWishlist(product)} 
                       whileHover={{ scale: 1.1 }}
@@ -136,7 +146,7 @@ const Shop = () => {
       {showCart && (
         <div className="fixed inset-0 bg-black/90 z-[60] flex justify-end">
           <div className="bg-dark-card w-full max-w-md h-full flex flex-col">
-            <div className="p-8 flex-shrink-0">
+            <div className="p-8 border-b border-gray-700 flex-shrink-0">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-bold">Your Wishlist ({wishlistCount})</h2>
                 <button onClick={() => setShowCart(false)}>
@@ -145,7 +155,7 @@ const Shop = () => {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-8 space-y-6 pb-8">
+           <div className="flex-1 overflow-y-auto px-8 space-y-6 py-8">
               {wishlist.length === 0 ? (
                 <p className="text-center py-20 text-gray-400">Your wishlist is empty</p>
               ) : (
@@ -196,13 +206,13 @@ const Shop = () => {
       {showSuccess && (
         <div className="fixed inset-0 bg-black/90 z-[70] flex items-center justify-center p-6 overflow-y-auto">
           <div className="bg-[#111827] w-full max-w-lg rounded-3xl border-4 border-[#d97706] overflow-hidden flex flex-col max-h-[92vh]">
-            <div className="p-8 border-b border-[#d97706]/30 text-center flex-shrink-0">
+            <div className="p-8 border-b border-accent-gold/30 text-center flex-shrink-0">
               <div className="text-6xl mb-4">🛍️</div>
               <h2 className="text-4xl font-bold text-white">Great Choices!</h2>
               <p className="text-[#fbbf24] text-xl mt-2">Your selected items are ready at Trueform Nutrition Shop</p>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-8">
+            <div className="flex-1 overflow-y-auto px-8 py-10">
               <div className="bg-[#1f2937] rounded-2xl p-6 mb-8">
                 <p className="text-gray-400 mb-1">Reference ID</p>
                 <p className="text-white font-mono text-lg mb-6">{orderId}</p>
@@ -228,7 +238,7 @@ const Shop = () => {
               </div>
             </div>
 
-            <div className="p-8 border-t border-[#d97706]/30 flex-shrink-0">
+            <div className="p-8 border-t border-accent-gold/30 flex-shrink-0">
               <button 
                 onClick={closeSuccess}
                 className="w-full py-5 bg-[#d97706] hover:bg-amber-500 text-black font-bold text-xl rounded-2xl transition-all"

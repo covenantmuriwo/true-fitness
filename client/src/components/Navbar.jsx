@@ -21,128 +21,132 @@ const Navbar = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  return (
-    <nav className="bg-black/90 backdrop-blur-md border-b border-primary-red/30 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-{/* Logo Section - Both Logos - Same Height */}
-<div className="flex items-center gap-4">
-  <Link to="/" className="flex items-center gap-3">
-    {/* True Fitness Logo - Fixed Height */}
-    <img 
-      src={trueFitnessLogo} 
-      alt="True Fitness" 
-      loading="lazy"
-  decoding="async"
-      className="h-12 w-auto object-contain" 
-    />
+return (
+  <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/10">
     
-    {/* Divider */}
-    <div className="h-8 w-px bg-white/30 hidden sm:block" />
-    
-    {/* Trueform Nutrition Logo - Same Height */}
-    <img 
-      src={trueformLogo} 
-      alt="Trueform Nutrition" 
-      loading="lazy"
-  decoding="async"
-      className="h-12 w-auto object-contain" 
-    />
-  </Link>
-</div>
-<div className="hidden md:flex items-center gap-8 text-sm font-medium">
-  {navLinks.map((link) => (
-    <Link
-      key={link.name}
-      to={link.path}
-      className="hover:text-primary-red transition-colors duration-300"
-    >
-      {link.name}
-    </Link>
-  ))}
+    <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-  {user ? (
-    <div className="flex items-center gap-4">
-      <span className="text-sm text-gray-300">
-  Hi, {user?.name || user?.email?.split('@')[0] || 'Member'}
-</span>
-      <button
-        onClick={logout}
-        className="px-6 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white rounded-full transition-all"
-      >
-        Logout
-      </button>
-    </div>
-  ) : (
-    <Link
-      to="/login"
-      className="px-6 py-2 border border-primary-red rounded-full hover:bg-primary-red hover:text-white transition-all"
-    >
-      Login
-    </Link>
-  )}
-</div>
+      {/* LEFT: Logos */}
+      <div className="flex items-center gap-4">
+        <img 
+          src={trueFitnessLogo} 
+          alt="True Fitness" 
+          className="h-10 w-auto object-contain"
+        />
+
+        <div className="h-6 w-px bg-white/20" />
+
+        <img 
+          src={trueformLogo} 
+          alt="Trueform Nutrition" 
+          className="h-10 w-auto object-contain"
+        />
+      </div>
+
+      {/* CENTER: Desktop Nav */}
+      <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        {navLinks.map((link) => (
+          <Link
+            key={link.name}
+            to={link.path}
+            className="hover:text-primary-red transition-colors"
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
+
+      {/* RIGHT: Auth + Actions */}
+      <div className="flex items-center gap-4">
+
+        {/* Wishlist (optional upgrade point) */}
+        <Link to="/wishlist" className="relative text-white">
+          ❤️
+          {wishlistCount > 0 && (
+            <span className="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1">
+              {wishlistCount}
+            </span>
+          )}
+        </Link>
+
+        {/* Auth */}
+        {user ? (
+          <button
+            onClick={logout}
+            className="hidden md:block px-4 py-2 border border-red-600 text-red-500 hover:bg-red-600 hover:text-white rounded-full transition-all"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="hidden md:block px-4 py-2 border border-primary-red text-primary-red hover:bg-primary-red hover:text-white rounded-full transition-all"
+          >
+            Login
+          </Link>
+        )}
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-white"
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
+    </div>
 
-{/* Mobile Menu */}
-<AnimatePresence>
-  {isOpen && (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      className="md:hidden bg-black/95 border-t border-primary-red/30"
-    >
-      <div className="flex flex-col px-6 py-6 space-y-6 text-lg">
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            to={link.path}
-            onClick={() => setIsOpen(false)}
-            className="hover:text-primary-red transition-colors"
-          >
-            {link.name}
-          </Link>
-        ))}
+    {/* MOBILE MENU */}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="md:hidden bg-black/95 border-t border-white/10 px-6 py-6"
+        >
 
-        {/* Mobile Auth Section */}
-        {user ? (
-          <>
-            <div className="text-center text-gray-300 py-2">
-              Hi, {user.name || 'Member'}
-            </div>
-            <button
-              onClick={() => {
-                logout();
-                setIsOpen(false);
-              }}
-              className="px-6 py-3 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white text-center rounded-full transition-all"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <Link
-            to="/login"
-            onClick={() => setIsOpen(false)}
-            className="px-6 py-3 border border-primary-red text-center rounded-full hover:bg-primary-red hover:text-white"
-          >
-            Login / Register
-          </Link>
-        )}
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
-    </nav>
-  );
+          <div className="flex flex-col gap-4 text-gray-300">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className="hover:text-primary-red transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-white/10">
+            {user ? (
+              <button
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="w-full px-4 py-3 border border-red-600 text-red-500 rounded-full"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block text-center w-full px-4 py-3 border border-primary-red text-primary-red rounded-full"
+              >
+                Login / Register
+              </Link>
+            )}
+          </div>
+
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+  </nav>
+);
 };
 
 export default Navbar;
