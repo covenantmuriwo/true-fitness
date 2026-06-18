@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import trueFitnessLogo from '../assets/true-fitness-logo.png';
@@ -16,7 +16,6 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'Gym', path: '/gym' },
     { name: 'Trueform Shop', path: '/shop' },
-    { name: 'Wishlist', path: '/wishlist' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -60,8 +59,11 @@ return (
       <div className="flex items-center gap-4">
 
         {/* Wishlist (optional upgrade point) */}
-        <Link to="/wishlist" className="relative text-white">
-          ❤️
+<Link
+  to="/wishlist"
+  className="relative flex items-center justify-center w-10 h-10 rounded-full border border-primary-red/30 hover:border-primary-red transition-all"
+>
+  ❤️
           {wishlistCount > 0 && (
             <span className="absolute -top-2 -right-2 text-xs bg-red-600 text-white rounded-full px-1">
               {wishlistCount}
@@ -70,21 +72,13 @@ return (
         </Link>
 
         {/* Auth */}
-        {user ? (
-          <button
-            onClick={logout}
-            className="hidden md:block px-4 py-2 border border-red-600 text-red-500 hover:bg-red-600 hover:text-white rounded-full transition-all"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link
-            to="/login"
-            className="hidden md:block px-4 py-2 border border-primary-red text-primary-red hover:bg-primary-red hover:text-white rounded-full transition-all"
-          >
-            Login
-          </Link>
-        )}
+{/* Profile */}
+<Link
+  to={user ? "/dashboard" : "/login"}
+  className="hidden md:flex w-10 h-10 items-center justify-center rounded-full border border-primary-red/30 hover:border-primary-red hover:bg-primary-red/10 transition-all"
+>
+  <User size={20} />
+</Link>
 
         {/* Mobile Menu Button */}
         <button
@@ -120,25 +114,13 @@ return (
           </div>
 
           <div className="mt-6 pt-6 border-t border-white/10">
-            {user ? (
-              <button
-                onClick={() => {
-                  logout();
-                  setIsOpen(false);
-                }}
-                className="w-full px-4 py-3 border border-red-600 text-red-500 rounded-full"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block text-center w-full px-4 py-3 border border-primary-red text-primary-red rounded-full"
-              >
-                Login / Register
-              </Link>
-            )}
+<Link
+  to={user ? "/dashboard" : "/login"}
+  onClick={() => setIsOpen(false)}
+  className="block text-center w-full px-4 py-3 border border-primary-red text-primary-red rounded-full"
+>
+  {user ? "My Profile" : "Login / Register"}
+</Link>
           </div>
 
         </motion.div>

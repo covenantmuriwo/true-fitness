@@ -12,12 +12,18 @@ const Dashboard = () => {
     }
   }, [user, navigate]);
 
-  if (!user) return <div className="text-center py-20">Loading...</div>;
+if (!user) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-gray-400 text-lg">
+      Loading...
+    </div>
+  );
+}
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
+    <div className="max-w-7xl mx-auto px-6 pt-32 pb-20">
       <div className="flex justify-between items-center mb-10">
-        <h1 className="text-5xl font-bold">Member Dashboard</h1>
+        <h1 className="text-5xl font-bold"> Welcome, {user.name}</h1>
         <button
           onClick={logout}
           className="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-full"
@@ -27,20 +33,20 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-dark-card p-8 rounded-2xl border border-primary-red/20">
-          <h3 className="text-xl text-accent-gold mb-4">Current Membership</h3>
+        <div className="bg-dark-card p-10 rounded-3xl border border-primary-red/30">
+          <h3 className="text-lg text-accent-gold mb-5">Current Membership</h3>
           <p className="text-3xl font-bold">No Active Plan</p>
           <p className="text-gray-400 mt-2">Choose a membership below</p>
         </div>
 
-        <div className="bg-dark-card p-8 rounded-2xl border border-primary-red/20">
-          <h3 className="text-xl text-accent-gold mb-4">Next Class</h3>
+        <div className="bg-dark-card p-10 rounded-3xl border border-primary-red/30">
+          <h3 className="text-lg text-accent-gold mb-5">Next Class</h3>
           <p className="text-3xl font-bold">Tomorrow 7:00 AM</p>
           <p className="text-gray-400 mt-2">Strength Training</p>
         </div>
 
-        <div className="bg-dark-card p-8 rounded-2xl border border-primary-red/20">
-          <h3 className="text-xl text-accent-gold mb-4">Progress</h3>
+        <div className="bg-dark-card p-10 rounded-3xl border border-primary-red/30">
+          <h3 className="text-lg text-accent-gold mb-5">Progress</h3>
           <p className="text-3xl font-bold">68%</p>
           <p className="text-gray-400 mt-2">This Month</p>
         </div>
