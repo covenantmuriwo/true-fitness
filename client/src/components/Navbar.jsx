@@ -156,30 +156,6 @@ return (
   )}
 
 </div>
-
-        {/* Bottom Section */}
-        
-        <div className="mt-12 p-8 border-t border-white/10">
-          {user ? (
-            <button
-              onClick={() => {
-                logout();
-                setIsOpen(false);
-              }}
-              className="w-full py-3 border border-red-600 text-red-500 rounded-full hover:bg-red-600 hover:text-white transition-all"
-            >
-              Logout
-            </button>
-          ) : (
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="block text-center w-full py-3 border border-primary-red text-primary-red rounded-full hover:bg-primary-red hover:text-white transition-all"
-            >
-              Login / Register
-            </Link>
-          )}
-        </div>
       </motion.div>
     </>
   )}
