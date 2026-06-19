@@ -12,41 +12,45 @@ const Wishlist = () => {
  return (
   <div className="min-h-screen px-6 pt-24">
     <div className="bg-dark-bg min-h-screen pb-20">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => navigate('/shop')}
-              className="text-gray-400 hover:text-white flex items-center gap-2 mb-6"
-            >
-              <ArrowLeft size={24} />
-              Back to Shop
-            </button>
-<div className="flex flex-col items-center justify-center text-center mb-10">
+      <div className="max-w-6xl mx-auto px-6 py-2">
+{/* Header */}
+<div className="mb-8">
 
+  {/* Main title */}
   <motion.h1
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="text-4xl md:text-6xl font-bold tracking-tight mb-5 text-center"
+    className="text-4xl md:text-6xl font-bold tracking-tight text-center mb-8"
   >
     My Wishlist
   </motion.h1>
 
+  {/* Action buttons */}
+  <div className="flex items-center justify-center gap-4 flex-wrap">
+
+    <button
+      onClick={() => navigate('/shop')}
+      className="flex items-center gap-2 px-5 py-3 rounded-full border border-gray-700 text-gray-300 hover:border-primary-red hover:text-white transition-all"
+    >
+      <ArrowLeft size={18} />
+      Back to Shop
+    </button>
+
+    {wishlist.length > 0 && (
+      <motion.button
+        onClick={clearWishlist}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.95 }}
+        className="flex items-center gap-2 px-5 py-3 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+      >
+        <Trash2 size={18} />
+        Clear All
+      </motion.button>
+    )}
+
+  </div>
+
 </div>
-          </div>
-          
-          {wishlist.length > 0 && (
-            <motion.button 
-              onClick={clearWishlist}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-red-500 hover:text-red-600 text-sm font-medium flex items-center gap-2"
-            >
-              <Trash2 size={18} />
-              Clear All
-            </motion.button>
-          )}
-        </div>
 
         {wishlist.length === 0 ? (
           <div className="min-h-[60vh] flex flex-col items-center justify-center -mt-10 text-center">
