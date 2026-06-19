@@ -134,7 +134,8 @@ return (
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-auto p-8 border-t border-white/10">
+        
+        <div className="mt-12 p-8 border-t border-white/10">
           {user ? (
             <button
               onClick={() => {
