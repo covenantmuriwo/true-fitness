@@ -91,41 +91,74 @@ return (
     </div>
 
     {/* MOBILE MENU */}
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="md:hidden bg-black/95 border-t border-white/10 px-6 py-6"
-        >
+{/* MOBILE MENU */}
+<AnimatePresence>
+  {isOpen && (
+    <>
+      {/* Overlay */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setIsOpen(false)}
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"
+      />
 
-          <div className="flex flex-col gap-4 text-gray-300">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className="hover:text-primary-red transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+      {/* Side Panel */}
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 30 }}
+        className="fixed top-0 right-0 h-screen w-72 bg-[#111111]/95 backdrop-blur-xl border-l border-white/10 rounded-l-3xl z-50 md:hidden flex flex-col"
+      >
+        {/* Close Button */}
+        <div className="flex justify-end p-6">
+          <button onClick={() => setIsOpen(false)}>
+            <X size={28} />
+          </button>
+        </div>
 
-          <div className="mt-6 pt-6 border-t border-white/10">
-<Link
-  to={user ? "/dashboard" : "/login"}
-  onClick={() => setIsOpen(false)}
-  className="block text-center w-full px-4 py-3 border border-primary-red text-primary-red rounded-full"
->
-  {user ? "My Profile" : "Login / Register"}
-</Link>
-          </div>
+        {/* Links */}
+        <div className="flex flex-col gap-8 px-8 text-lg text-gray-300">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className="hover:text-primary-red transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
 
-        </motion.div>
-      )}
-    </AnimatePresence>
+        {/* Bottom Section */}
+        <div className="mt-auto p-8 border-t border-white/10">
+          {user ? (
+            <button
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+              }}
+              className="w-full py-3 border border-red-600 text-red-500 rounded-full hover:bg-red-600 hover:text-white transition-all"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setIsOpen(false)}
+              className="block text-center w-full py-3 border border-primary-red text-primary-red rounded-full hover:bg-primary-red hover:text-white transition-all"
+            >
+              Login / Register
+            </Link>
+          )}
+        </div>
+      </motion.div>
+    </>
+  )}
+</AnimatePresence>
 
   </nav>
 );
