@@ -90,7 +90,6 @@ return (
       </div>
     </div>
 
-    {/* MOBILE MENU */}
 {/* MOBILE MENU */}
 <AnimatePresence>
   {isOpen && (
@@ -132,6 +131,31 @@ return (
             </Link>
           ))}
         </div>
+
+        <div className="mt-8 p-8 border-t border-white/10">
+
+  <Link
+    to={user ? "/dashboard" : "/login"}
+    onClick={() => setIsOpen(false)}
+    className="flex items-center gap-3 text-gray-300 hover:text-primary-red transition-colors mb-5"
+  >
+    <User size={22} />
+    {user ? "My Profile" : "Login / Register"}
+  </Link>
+
+  {user && (
+    <button
+      onClick={() => {
+        logout();
+        setIsOpen(false);
+      }}
+      className="w-full py-3 border border-red-600 text-red-500 rounded-full hover:bg-red-600 hover:text-white transition-all"
+    >
+      Logout
+    </button>
+  )}
+
+</div>
 
         {/* Bottom Section */}
         
