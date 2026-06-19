@@ -22,15 +22,24 @@ if (!user) {
 
   return (
     <div className="max-w-7xl mx-auto px-6 pt-32 pb-20">
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-5xl font-bold"> Welcome, {user.name}</h1>
-        <button
-          onClick={logout}
-          className="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-full"
-        >
-          Logout
-        </button>
-      </div>
+<div className="text-center mb-16">
+
+  <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-5">
+    Member Dashboard
+  </h1>
+
+  <p className="text-lg text-gray-400 mb-8">
+    Welcome back, {user.name}
+  </p>
+
+  <button
+    onClick={logout}
+    className="px-8 py-3 bg-primary-red hover:bg-red-700 rounded-xl font-semibold transition-all"
+  >
+    Logout
+  </button>
+
+</div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-dark-card p-10 rounded-3xl border border-primary-red/30">

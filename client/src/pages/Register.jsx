@@ -34,9 +34,9 @@ const Register = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-sm w-full bg-dark-card p-5 md:p-6 rounded-3xl border border-primary-red/30 mt-8"
+        className="max-w-sm w-full bg-dark-card p-4 md:p-5 rounded-3xl border border-primary-red/30 mt-8"
       >
-        <div className="text-center mb-10">
+        <div className="text-center mb-2">
   <h1 className="text-3xl font-bold tracking-tight mb-2">
     Join True Fitness
   </h1>
@@ -48,14 +48,14 @@ const Register = () => {
         
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-2">
           <div>
             <label className="block text-sm text-gray-300 mb-1">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2.5 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
+              className="w-full px-4 py-2 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
               required
             />
           </div>
@@ -66,7 +66,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
+              className="w-full px-4 py-2 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
               required
             />
           </div>
@@ -77,7 +77,7 @@ const Register = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
+              className="w-full px-4 py-2 bg-black border border-primary-red/30 rounded-2xl focus:border-primary-red outline-none transition-all"
               required
             />
           </div>
@@ -85,13 +85,13 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-primary-red hover:bg-red-700 rounded-xl font-semibold transition-all disabled:opacity-70"
+           className="w-full py-2 bg-primary-red hover:bg-red-700 rounded-xl font-semibold transition-all disabled:opacity-70"
           >
             {loading ? 'Creating Account...' : 'Register'}
           </button>
         </form>
 
-        <p className="text-center mt-4 text-gray-400 text-sm">
+       <p className="text-center mt-3 text-gray-400 text-sm">
           Already have an account?{' '}
           <Link to="/login" className="text-primary-red hover:text-red-400 transition-all">Login here</Link>
         </p>
